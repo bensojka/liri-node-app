@@ -18,6 +18,8 @@ var name = inputString[3];
 
 var movieName = "";
 
+var songName = "";
+
 var client;
 
 
@@ -40,8 +42,7 @@ if (command === "my-tweets") {
                 var d = dStr.replace("+0000 ", "");
                 var twitterResults =
                 d + ": " + "@" + data[i].user.screen_name + ": " +
-                data[i].text + "\r\n" +
-                "-------------------------------" + i + "-------------------------------" + "\r\n";
+                data[i].text + "\r\n";
                 console.log(twitterResults);
             }
         }
@@ -53,14 +54,31 @@ if (command === "my-tweets") {
 }
 
 else if (command === "spotify-this-song") {
+
+    for (var i = 3; i < inputString.length; i++) {
+        
+        if (i > 3 && i < inputString.length) {
+        
+            songName = songName + " " + inputString[i];
+        
+        }
+        
+        else {
+        
+            songName += inputString[i];
+        
+        }
+    }
+
     client = new Spotify({
         id: keys.spotifyKeys.id,
         secret: keys.spotifyKeys.secret,
     });
     if(!name){
-        name = "The Sign Ace of Base";
+        songName = "The Sign Ace of Base";
     }
-    params = name;
+
+    params = songName;
     client.search({ type: "track", query: params }, function(err, data) {
         if(!err){
             var songInfo = data.tracks.items;
@@ -70,8 +88,7 @@ else if (command === "spotify-this-song") {
                     "Artist: " + songInfo[i].artists[0].name + "\r\n" +
                     "Song: " + songInfo[i].name + "\r\n" +
                     "Album: " + songInfo[i].album.name + "\r\n" +
-                    "Preview: " + songInfo[i].preview_url + "\r\n" + 
-                    "------------------------------ " + i + " ------------------------------" + "\r\n";
+                    "Preview: " + songInfo[i].preview_url + "\r\n";
                     console.log(spotifyResults);
                 }
             }
@@ -103,8 +120,6 @@ else if (command === "movie-this") {
     }
 
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&tomatoes=true&apikey=40e9cece";
-
-    console.log(queryUrl);
     
     request(queryUrl, function(error, response, body) {
     
@@ -151,8 +166,7 @@ else if (command === "do-what-it-says") {
                             "Artist: " + songInfo[i].artists[0].name + "\r\n" +
                             "Song: " + songInfo[i].name + "\r\n" +
                             "Album: " + songInfo[i].album.name + "\r\n" +
-                            "Preview: " + songInfo[i].preview_url + "\r\n" + 
-                            "------------------------------ " + i + " ------------------------------" + "\r\n";
+                            "Preview: " + songInfo[i].preview_url + "\r\n";
                             console.log(spotifyResults);
                         }
                     }
