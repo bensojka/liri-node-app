@@ -36,6 +36,7 @@ if (command === "my-tweets") {
     }
     params = {screen_name: name};
     client.get("statuses/user_timeline/", params, function(error, data, response){
+
         if (!error) {
             for (var i = 0; i < data.length; i++) {
                 var dStr = data[i].created_at;
@@ -48,6 +49,7 @@ if (command === "my-tweets") {
         }
         else {
             console.log("Error :" + error);
+            console.log(arguments);            
             return;
         }
     });
