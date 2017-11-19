@@ -1,4 +1,4 @@
-# liri-node-app
+# LIRI 
 9/2/17
 
 THIS MUST BE RAN ON THE COMMAND LINE
